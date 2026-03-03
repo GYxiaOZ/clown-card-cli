@@ -12,7 +12,7 @@ export const JOKER_TYPES = {
   GREEDY_JOKER: {
     id: 'greedy_joker',
     name: '贪婪小丑',
-    description: '手牌有对子时 +4 倍率',
+    description: '打出的牌中有对子时 +4 倍率',
     rarity: '普通',
     cost: 4,
     effect: (state) => {
@@ -26,7 +26,7 @@ export const JOKER_TYPES = {
   JOLLY_JOKER: {
     id: 'jolly_joker',
     name: '欢乐小丑',
-    description: '手牌有对子或三条时 +8 倍率',
+    description: '打出的牌中有对子或三条时 +8 倍率',
     rarity: '稀有',
     cost: 6,
     effect: (state) => {
@@ -40,7 +40,7 @@ export const JOKER_TYPES = {
   ZANY_JOKER: {
     id: 'zany_joker',
     name: '滑稽小丑',
-    description: '手牌有三条时 +12 倍率',
+    description: '打出的牌中有三条时 +12 倍率',
     rarity: '稀有',
     cost: 7,
     effect: (state) => {
@@ -53,7 +53,7 @@ export const JOKER_TYPES = {
   DROLL_JOKER: {
     id: 'droll_joker',
     name: '逗趣小丑',
-    description: '手牌有顺子时 +10 倍率',
+    description: '打出的牌中有顺子时 +10 倍率',
     rarity: '史诗',
     cost: 8,
     effect: (state) => {
@@ -67,7 +67,7 @@ export const JOKER_TYPES = {
   SLY_JOKER: {
     id: 'sly_joker',
     name: '狡猾小丑',
-    description: '手牌有同花时 +8 倍率',
+    description: '打出的牌中有同花时 +8 倍率',
     rarity: '稀有',
     cost: 7,
     effect: (state) => {
@@ -81,7 +81,7 @@ export const JOKER_TYPES = {
   WILY_JOKER: {
     id: 'wily_joker',
     name: '诡计小丑',
-    description: '手牌有葫芦时 +12 倍率',
+    description: '打出的牌中有葫芦时 +12 倍率',
     rarity: '稀有',
     cost: 7,
     effect: (state) => {
@@ -94,7 +94,7 @@ export const JOKER_TYPES = {
   CLEVER_JOKER: {
     id: 'clever_joker',
     name: '聪明小丑',
-    description: '手牌有炸弹时 +10 倍率',
+    description: '打出的牌中有炸弹时 +10 倍率',
     rarity: '史诗',
     cost: 8,
     effect: (state) => {
@@ -107,7 +107,7 @@ export const JOKER_TYPES = {
   FLASH_JOKER: {
     id: 'flash_joker',
     name: '闪光小丑',
-    description: '手牌有同花时 +50 筹码',
+    description: '打出的牌中有同花时 +50 筹码',
     rarity: '普通',
     cost: 5,
     effect: (state) => {
@@ -150,7 +150,7 @@ export const JOKER_TYPES = {
   LUSTY_JOKER: {
     id: 'lusty_joker',
     name: '色欲小丑',
-    description: '手牌每张红桃 +3 倍率',
+    description: '打出的牌中每张红桃 +3 倍率',
     rarity: '普通',
     cost: 5,
     effect: (state) => {
@@ -161,7 +161,7 @@ export const JOKER_TYPES = {
   WRATHFUL_JOKER: {
     id: 'wrathful_joker',
     name: '愤怒小丑',
-    description: '手牌每张黑桃 +3 倍率',
+    description: '打出的牌中每张黑桃 +3 倍率',
     rarity: '普通',
     cost: 5,
     effect: (state) => {
@@ -172,7 +172,7 @@ export const JOKER_TYPES = {
   GLUTTONOUS_JOKER: {
     id: 'gluttonous_joker',
     name: '暴食小丑',
-    description: '手牌每张梅花 +3 倍率',
+    description: '打出的牌中每张梅花 +3 倍率',
     rarity: '普通',
     cost: 5,
     effect: (state) => {
@@ -183,7 +183,7 @@ export const JOKER_TYPES = {
   SLOTHFUL_JOKER: {
     id: 'slothful_joker',
     name: '懒惰小丑',
-    description: '手牌每张方块 +3 倍率',
+    description: '打出的牌中每张方块 +3 倍率',
     rarity: '普通',
     cost: 5,
     effect: (state) => {
@@ -235,7 +235,7 @@ export const JOKER_TYPES = {
   MYSTIC_SUMMIT: {
     id: 'mystic_summit',
     name: '神秘之巅',
-    description: '手牌正好 5 张时 +18 倍率',
+    description: '打出的牌正好 5 张时 +18 倍率',
     rarity: '稀有',
     cost: 6,
     effect: (state) => {
@@ -283,7 +283,7 @@ export const JOKER_TYPES = {
   SQUARE_JOKER: {
     id: 'square_joker',
     name: '方块小丑',
-    description: '手牌全是偶数时 +4 倍率',
+    description: '打出的牌全是偶数时 +4 倍率',
     rarity: '稀有',
     cost: 6,
     effect: (state) => {
