@@ -1,0 +1,228 @@
+{
+  "round": 3,
+  "ante": 1,
+  "money": 6,
+  "handsRemaining": 4,
+  "discardsRemaining": 3,
+  "score": 0,
+  "scoreRequired": 400,
+  "isFirstHand": true,
+  "maxJokers": 5,
+  "hand": [
+    {
+      "suit": "♥",
+      "rank": "2"
+    },
+    {
+      "suit": "♦",
+      "rank": "8"
+    },
+    {
+      "suit": "♠",
+      "rank": "9"
+    },
+    {
+      "suit": "♠",
+      "rank": "J"
+    },
+    {
+      "suit": "♠",
+      "rank": "Q"
+    },
+    {
+      "suit": "♥",
+      "rank": "Q"
+    },
+    {
+      "suit": "♠",
+      "rank": "K"
+    },
+    {
+      "suit": "♦",
+      "rank": "A"
+    }
+  ],
+  "deck": [
+    {
+      "suit": "♠",
+      "rank": "10"
+    },
+    {
+      "suit": "♥",
+      "rank": "9"
+    },
+    {
+      "suit": "♦",
+      "rank": "3"
+    },
+    {
+      "suit": "♠",
+      "rank": "5"
+    },
+    {
+      "suit": "♦",
+      "rank": "9"
+    },
+    {
+      "suit": "♣",
+      "rank": "7"
+    },
+    {
+      "suit": "♣",
+      "rank": "2"
+    },
+    {
+      "suit": "♥",
+      "rank": "K"
+    },
+    {
+      "suit": "♠",
+      "rank": "A"
+    },
+    {
+      "suit": "♣",
+      "rank": "10"
+    },
+    {
+      "suit": "♠",
+      "rank": "4"
+    },
+    {
+      "suit": "♥",
+      "rank": "A"
+    },
+    {
+      "suit": "♣",
+      "rank": "K"
+    },
+    {
+      "suit": "♠",
+      "rank": "2"
+    },
+    {
+      "suit": "♦",
+      "rank": "Q"
+    },
+    {
+      "suit": "♦",
+      "rank": "J"
+    },
+    {
+      "suit": "♣",
+      "rank": "6"
+    },
+    {
+      "suit": "♦",
+      "rank": "5"
+    },
+    {
+      "suit": "♥",
+      "rank": "8"
+    },
+    {
+      "suit": "♥",
+      "rank": "5"
+    },
+    {
+      "suit": "♣",
+      "rank": "8"
+    },
+    {
+      "suit": "♠",
+      "rank": "7"
+    },
+    {
+      "suit": "♠",
+      "rank": "8"
+    },
+    {
+      "suit": "♥",
+      "rank": "4"
+    },
+    {
+      "suit": "♠",
+      "rank": "3"
+    },
+    {
+      "suit": "♣",
+      "rank": "9"
+    },
+    {
+      "suit": "♥",
+      "rank": "10"
+    },
+    {
+      "suit": "♦",
+      "rank": "K"
+    },
+    {
+      "suit": "♥",
+      "rank": "6"
+    },
+    {
+      "suit": "♣",
+      "rank": "4"
+    },
+    {
+      "suit": "♦",
+      "rank": "6"
+    },
+    {
+      "suit": "♦",
+      "rank": "2"
+    },
+    {
+      "suit": "♣",
+      "rank": "3"
+    },
+    {
+      "suit": "♣",
+      "rank": "Q"
+    },
+    {
+      "suit": "♣",
+      "rank": "5"
+    },
+    {
+      "suit": "♦",
+      "rank": "10"
+    },
+    {
+      "suit": "♦",
+      "rank": "4"
+    },
+    {
+      "suit": "♠",
+      "rank": "6"
+    },
+    {
+      "suit": "♣",
+      "rank": "A"
+    },
+    {
+      "suit": "♣",
+      "rank": "J"
+    },
+    {
+      "suit": "♥",
+      "rank": "7"
+    },
+    {
+      "suit": "♥",
+      "rank": "J"
+    },
+    {
+      "suit": "♥",
+      "rank": "3"
+    },
+    {
+      "suit": "♦",
+      "rank": "7"
+    }
+  ],
+  "discardPile": [],
+  "jokers": [
+    "joker",
+    "jolly_joker"
+  ]
+}

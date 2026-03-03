@@ -5,19 +5,52 @@ import chalk from 'chalk';
 import { GameState } from './game.js';
 import { UI } from './ui.js';
 import { getRandomJoker } from './jokers.js';
+import { SaveManager } from './save.js';
 
 async function main() {
   UI.clear();
   UI.printWelcome();
 
-  const cont = await UI.askContinue();
-  if (!cont) {
-    console.log('再见!');
-    process.exit(0);
-  }
+  let game;
 
-  const game = new GameState();
-  game.drawInitialHand();
+  if (SaveManager.saveExists()) {
+    const action = await UI.askLoadGame();
+
+    if (action === 'load') {
+      game = new GameState();
+      const saveData = SaveManager.loadGame();
+      if (saveData) {
+        SaveManager.restoreGame(game, saveData);
+        console.log('存档加载成功!');
+        await UI.askContinue();
+      } else {
+        console.log('存档损坏，开始新游戏...');
+        game = new GameState();
+        game.drawInitialHand();
+      }
+    } else if (action === 'delete') {
+      SaveManager.deleteSave();
+      console.log('存档已删除!');
+      const cont = await UI.askContinue();
+      if (!cont) {
+        console.log('再见!');
+        process.exit(0);
+      }
+      game = new GameState();
+      game.drawInitialHand();
+    } else {
+      game = new GameState();
+      game.drawInitialHand();
+    }
+  } else {
+    const cont = await UI.askContinue();
+    if (!cont) {
+      console.log('再见!');
+      process.exit(0);
+    }
+    game = new GameState();
+    game.drawInitialHand();
+  }
 
   while (true) {
     UI.clear();
@@ -70,6 +103,7 @@ async function main() {
       } else {
         UI.printDefeat();
         UI.printGameOver(game);
+        SaveManager.deleteSave();
         break;
       }
     } else {
@@ -123,6 +157,14 @@ async function main() {
         game.hand.sortByRank();
       } else if (action === 'sortSuit') {
         game.hand.sortBySuit();
+      } else if (action === 'save') {
+        SaveManager.saveGame(game);
+        console.log(chalk.green('游戏已保存!'));
+        await UI.askContinue();
+      } else if (action === 'exit') {
+        SaveManager.saveGame(game);
+        console.log(chalk.yellow('游戏已保存，再见!'));
+        process.exit(0);
       }
     }
   }

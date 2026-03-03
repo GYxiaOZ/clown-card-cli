@@ -111,7 +111,26 @@ export class UI {
           { name: '🎴 出牌', value: 'play' },
           { name: '🗑️  弃牌', value: 'discard' },
           { name: '🔀 按点数排序', value: 'sortRank' },
-          { name: '♠ 按花色排序', value: 'sortSuit' }
+          { name: '♠ 按花色排序', value: 'sortSuit' },
+          new inquirer.Separator(),
+          { name: '💾 保存游戏', value: 'save' },
+          { name: '🚪 退出游戏', value: 'exit' }
+        ]
+      }
+    ]);
+    return action;
+  }
+
+  static async askLoadGame() {
+    const { action } = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'action',
+        message: '发现存档，你想做什么？',
+        choices: [
+          { name: '📂 继续上次的游戏', value: 'load' },
+          { name: '🆕 开始新游戏', value: 'new' },
+          { name: '🗑️  删除存档', value: 'delete' }
         ]
       }
     ]);
