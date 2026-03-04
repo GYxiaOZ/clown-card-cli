@@ -62,38 +62,76 @@ async function main() {
       if (game.isVictory()) {
         UI.printVictory();
 
-        const shopAction = await UI.askShop(game.money, game.maxJokers);
+        // 商店主循环 - 先生成一次商店小丑牌
+        let shopJokers = [
+          getRandomJoker(),
+          getRandomJoker(),
+          getRandomJoker()
+        ];
 
-        if (shopAction === 'buy') {
-          while (true) {
-            UI.clear();
-            UI.printHeader(game);
+        while (true) {
+          const shopAction = await UI.askShop(game.money, game.maxJokers, game.jokers.length);
 
-            if (game.jokers.length >= game.maxJokers) {
-              console.log('你的小丑牌槽位已满!');
+          if (shopAction === 'skip') {
+            break;
+          } else if (shopAction === 'buy') {
+            while (true) {
+              UI.clear();
+              UI.printHeader(game);
+              UI.printJokers(game);
+
+              const slotsFull = game.jokers.length >= game.maxJokers;
+
+              if (slotsFull) {
+                console.log(chalk.yellow('你的小丑牌槽位已满! 可以先出售一些小丑牌。\n'));
+              }
+
+              if (shopJokers.length === 0) {
+                console.log(chalk.yellow('商店已售罄!'));
+                await UI.askContinue();
+                break;
+              }
+
+              UI.printShopJokers(shopJokers);
+
+              const choice = await UI.askJokerPurchase(shopJokers, game.money, slotsFull);
+
+              if (choice === -1) break;
+
+              const joker = shopJokers[choice];
+              if (game.buyJoker(joker)) {
+                console.log(chalk.green(`购买了 ${joker.name}!`));
+                shopJokers.splice(choice, 1); // 从商店移除已购买的
+              } else {
+                console.log(chalk.red('购买失败!'));
+              }
               await UI.askContinue();
-              break;
             }
+          } else if (shopAction === 'sell') {
+            while (true) {
+              UI.clear();
+              UI.printHeader(game);
 
-            const shopJokers = [
-              getRandomJoker(),
-              getRandomJoker(),
-              getRandomJoker()
-            ];
+              if (game.jokers.length === 0) {
+                console.log(chalk.yellow('你没有可出售的小丑牌!'));
+                await UI.askContinue();
+                break;
+              }
 
-            UI.printShopJokers(shopJokers);
+              UI.printYourJokersForSell(game);
 
-            const choice = await UI.askJokerPurchase(shopJokers, game.money);
+              const choice = await UI.askJokerSell(game.jokers);
 
-            if (choice === -1) break;
+              if (choice === -1) break;
 
-            const joker = shopJokers[choice];
-            if (game.buyJoker(joker)) {
-              console.log(`购买了 ${joker.name}!`);
-            } else {
-              console.log('购买失败!');
+              const result = game.sellJoker(choice);
+              if (result) {
+                console.log(chalk.green(`出售了 ${result.joker.name}, 获得 $${result.sellPrice}!`));
+              } else {
+                console.log(chalk.red('出售失败!'));
+              }
+              await UI.askContinue();
             }
-            await UI.askContinue();
           }
         }
 

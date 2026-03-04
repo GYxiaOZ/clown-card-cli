@@ -1,6 +1,7 @@
 // 小丑牌系统
 
 export const JOKER_TYPES = {
+  // 普通 (16张)
   JOKER: {
     id: 'joker',
     name: '小丑',
@@ -19,87 +20,6 @@ export const JOKER_TYPES = {
       if (state.handResult?.type === 'PAIR' || state.handResult?.type === 'TWO_PAIR' ||
           state.handResult?.type === 'FULL_HOUSE') {
         return { multBonus: 4 };
-      }
-      return {};
-    }
-  },
-  JOLLY_JOKER: {
-    id: 'jolly_joker',
-    name: '欢乐小丑',
-    description: '打出的牌中有对子或三条时 +8 倍率',
-    rarity: '稀有',
-    cost: 6,
-    effect: (state) => {
-      if (state.handResult?.type === 'PAIR' || state.handResult?.type === 'THREE_OF_A_KIND' ||
-          state.handResult?.type === 'FULL_HOUSE') {
-        return { multBonus: 8 };
-      }
-      return {};
-    }
-  },
-  ZANY_JOKER: {
-    id: 'zany_joker',
-    name: '滑稽小丑',
-    description: '打出的牌中有三条时 +12 倍率',
-    rarity: '稀有',
-    cost: 7,
-    effect: (state) => {
-      if (state.handResult?.type === 'THREE_OF_A_KIND' || state.handResult?.type === 'FULL_HOUSE') {
-        return { multBonus: 12 };
-      }
-      return {};
-    }
-  },
-  DROLL_JOKER: {
-    id: 'droll_joker',
-    name: '逗趣小丑',
-    description: '打出的牌中有顺子时 +10 倍率',
-    rarity: '史诗',
-    cost: 8,
-    effect: (state) => {
-      if (state.handResult?.type === 'STRAIGHT' || state.handResult?.type === 'STRAIGHT_FLUSH' ||
-          state.handResult?.type === 'ROYAL_FLUSH') {
-        return { multBonus: 10 };
-      }
-      return {};
-    }
-  },
-  SLY_JOKER: {
-    id: 'sly_joker',
-    name: '狡猾小丑',
-    description: '打出的牌中有同花时 +8 倍率',
-    rarity: '稀有',
-    cost: 7,
-    effect: (state) => {
-      if (state.handResult?.type === 'FLUSH' || state.handResult?.type === 'STRAIGHT_FLUSH' ||
-          state.handResult?.type === 'ROYAL_FLUSH') {
-        return { multBonus: 8 };
-      }
-      return {};
-    }
-  },
-  WILY_JOKER: {
-    id: 'wily_joker',
-    name: '诡计小丑',
-    description: '打出的牌中有葫芦时 +12 倍率',
-    rarity: '稀有',
-    cost: 7,
-    effect: (state) => {
-      if (state.handResult?.type === 'FULL_HOUSE') {
-        return { multBonus: 12 };
-      }
-      return {};
-    }
-  },
-  CLEVER_JOKER: {
-    id: 'clever_joker',
-    name: '聪明小丑',
-    description: '打出的牌中有炸弹时 +10 倍率',
-    rarity: '史诗',
-    cost: 8,
-    effect: (state) => {
-      if (state.handResult?.type === 'FOUR_OF_A_KIND' || state.handResult?.type === 'FIVE_OF_A_KIND') {
-        return { multBonus: 10 };
       }
       return {};
     }
@@ -125,27 +45,6 @@ export const JOKER_TYPES = {
     rarity: '普通',
     cost: 4,
     effect: (state) => ({ chipBonus: 50, multBonus: -2 })
-  },
-  STEEL_JOKER: {
-    id: 'steel_joker',
-    name: '钢铁小丑',
-    description: '+100 筹码, -4 倍率',
-    rarity: '稀有',
-    cost: 6,
-    effect: (state) => ({ chipBonus: 100, multBonus: -4 })
-  },
-  GOLD_JOKER: {
-    id: 'gold_joker',
-    name: '黄金小丑',
-    description: '根据金钱 +4 到 +12 倍率',
-    rarity: '史诗',
-    cost: 8,
-    effect: (state) => {
-      let multBonus = 4;
-      if (state.money >= 20) multBonus = 8;
-      if (state.money >= 40) multBonus = 12;
-      return { multBonus };
-    }
   },
   LUSTY_JOKER: {
     id: 'lusty_joker',
@@ -191,34 +90,6 @@ export const JOKER_TYPES = {
       return { multBonus: diamondCount * 3 };
     }
   },
-  CERAMIC_JOKER: {
-    id: 'ceramic_joker',
-    name: '陶瓷小丑',
-    description: '剩余弃牌次数 ×30 筹码',
-    rarity: '稀有',
-    cost: 6,
-    effect: (state) => {
-      return { chipBonus: (state.discardsRemaining || 0) * 30 };
-    }
-  },
-  MISPRINT: {
-    id: 'misprint',
-    name: '错印',
-    description: '+0-23 随机倍率',
-    rarity: '史诗',
-    cost: 8,
-    effect: (state) => {
-      return { multBonus: Math.floor(Math.random() * 24) };
-    }
-  },
-  OOPS: {
-    id: 'oops',
-    name: '哎呀!',
-    description: '所有小丑牌 +4 倍率（这个除外）',
-    rarity: '传说',
-    cost: 20,
-    effect: (state) => ({})
-  },
   BANNER: {
     id: 'banner',
     name: '旗帜',
@@ -232,15 +103,102 @@ export const JOKER_TYPES = {
       return {};
     }
   },
+  JOLLY_JOKER: {
+    id: 'jolly_joker',
+    name: '欢乐小丑',
+    description: '打出的牌中有对子或三条时 +6 倍率',
+    rarity: '普通',
+    cost: 5,
+    effect: (state) => {
+      if (state.handResult?.type === 'PAIR' || state.handResult?.type === 'THREE_OF_A_KIND' ||
+          state.handResult?.type === 'FULL_HOUSE') {
+        return { multBonus: 6 };
+      }
+      return {};
+    }
+  },
+  SLY_JOKER: {
+    id: 'sly_joker',
+    name: '狡猾小丑',
+    description: '打出的牌中有同花时 +6 倍率',
+    rarity: '普通',
+    cost: 5,
+    effect: (state) => {
+      if (state.handResult?.type === 'FLUSH' || state.handResult?.type === 'STRAIGHT_FLUSH' ||
+          state.handResult?.type === 'ROYAL_FLUSH') {
+        return { multBonus: 6 };
+      }
+      return {};
+    }
+  },
+  WILY_JOKER: {
+    id: 'wily_joker',
+    name: '诡计小丑',
+    description: '打出的牌中有葫芦时 +8 倍率',
+    rarity: '普通',
+    cost: 6,
+    effect: (state) => {
+      if (state.handResult?.type === 'FULL_HOUSE') {
+        return { multBonus: 8 };
+      }
+      return {};
+    }
+  },
+  STEEL_JOKER: {
+    id: 'steel_joker',
+    name: '钢铁小丑',
+    description: '+80 筹码, -3 倍率',
+    rarity: '普通',
+    cost: 5,
+    effect: (state) => ({ chipBonus: 80, multBonus: -3 })
+  },
+  CERAMIC_JOKER: {
+    id: 'ceramic_joker',
+    name: '陶瓷小丑',
+    description: '剩余弃牌次数 ×20 筹码',
+    rarity: '普通',
+    cost: 5,
+    effect: (state) => {
+      return { chipBonus: (state.discardsRemaining || 0) * 20 };
+    }
+  },
   MYSTIC_SUMMIT: {
     id: 'mystic_summit',
     name: '神秘之巅',
-    description: '打出的牌正好 5 张时 +18 倍率',
-    rarity: '稀有',
+    description: '打出的牌正好 5 张时 +12 倍率',
+    rarity: '普通',
     cost: 6,
     effect: (state) => {
       if (state.hand?.length === 5) {
-        return { multBonus: 18 };
+        return { multBonus: 12 };
+      }
+      return {};
+    }
+  },
+  SQUARE_JOKER: {
+    id: 'square_joker',
+    name: '方块小丑',
+    description: '打出的牌全是偶数时 +6 倍率',
+    rarity: '普通',
+    cost: 5,
+    effect: (state) => {
+      if (state.hand?.every(c => c.value % 2 === 0)) {
+        return { multBonus: 6 };
+      }
+      return {};
+    }
+  },
+
+  // 稀有 (8张)
+  ZANY_JOKER: {
+    id: 'zany_joker',
+    name: '滑稽小丑',
+    description: '打出的牌中有三条时 +15 倍率',
+    rarity: '稀有',
+    cost: 7,
+    effect: (state) => {
+      if (state.handResult?.type === 'THREE_OF_A_KIND' || state.handResult?.type === 'FULL_HOUSE') {
+        return { multBonus: 15 };
       }
       return {};
     }
@@ -248,47 +206,12 @@ export const JOKER_TYPES = {
   MARBLE_JOKER: {
     id: 'marble_joker',
     name: '大理石小丑',
-    description: '弃牌次数用完时 +25 倍率',
+    description: '弃牌次数用完时 +30 倍率',
     rarity: '稀有',
     cost: 7,
     effect: (state) => {
       if (state.discardsRemaining === 0) {
-        return { multBonus: 25 };
-      }
-      return {};
-    }
-  },
-  RED_CARD: {
-    id: 'red_card',
-    name: '红卡',
-    description: '每张红桃 +30 筹码',
-    rarity: '史诗',
-    cost: 8,
-    effect: (state) => {
-      const heartCount = state.hand?.filter(c => c.suit === '♥').length || 0;
-      return { chipBonus: heartCount * 30 };
-    }
-  },
-  BLACK_CARD: {
-    id: 'black_card',
-    name: '黑卡',
-    description: '每张黑桃 +30 筹码',
-    rarity: '史诗',
-    cost: 8,
-    effect: (state) => {
-      const spadeCount = state.hand?.filter(c => c.suit === '♠').length || 0;
-      return { chipBonus: spadeCount * 30 };
-    }
-  },
-  SQUARE_JOKER: {
-    id: 'square_joker',
-    name: '方块小丑',
-    description: '打出的牌全是偶数时 +4 倍率',
-    rarity: '稀有',
-    cost: 6,
-    effect: (state) => {
-      if (state.hand?.every(c => c.value % 2 === 0)) {
-        return { multBonus: 4 };
+        return { multBonus: 30 };
       }
       return {};
     }
@@ -296,15 +219,140 @@ export const JOKER_TYPES = {
   HANGER_ON: {
     id: 'hanger_on',
     name: '跟屁虫',
-    description: '拥有至少 5 张小丑牌时 +7 倍率',
+    description: '拥有至少 5 张小丑牌时 +10 倍率',
     rarity: '稀有',
-    cost: 6,
+    cost: 7,
     effect: (state) => {
       if (state.jokerCount >= 5) {
-        return { multBonus: 7 };
+        return { multBonus: 10 };
       }
       return {};
     }
+  },
+  CLEVER_JOKER: {
+    id: 'clever_joker',
+    name: '聪明小丑',
+    description: '打出的牌中有炸弹时 +15 倍率',
+    rarity: '稀有',
+    cost: 7,
+    effect: (state) => {
+      if (state.handResult?.type === 'FOUR_OF_A_KIND' || state.handResult?.type === 'FIVE_OF_A_KIND') {
+        return { multBonus: 15 };
+      }
+      return {};
+    }
+  },
+  GOLD_JOKER: {
+    id: 'gold_joker',
+    name: '黄金小丑',
+    description: '根据金钱 +5 到 +15 倍率',
+    rarity: '稀有',
+    cost: 8,
+    effect: (state) => {
+      let multBonus = 5;
+      if (state.money >= 20) multBonus = 10;
+      if (state.money >= 40) multBonus = 15;
+      return { multBonus };
+    }
+  },
+  DROLL_JOKER: {
+    id: 'droll_joker',
+    name: '逗趣小丑',
+    description: '打出的牌中有顺子时 +15 倍率',
+    rarity: '稀有',
+    cost: 8,
+    effect: (state) => {
+      if (state.handResult?.type === 'STRAIGHT' || state.handResult?.type === 'STRAIGHT_FLUSH' ||
+          state.handResult?.type === 'ROYAL_FLUSH') {
+        return { multBonus: 15 };
+      }
+      return {};
+    }
+  },
+  RED_CARD: {
+    id: 'red_card',
+    name: '红卡',
+    description: '每张红桃 +40 筹码',
+    rarity: '稀有',
+    cost: 7,
+    effect: (state) => {
+      const heartCount = state.hand?.filter(c => c.suit === '♥').length || 0;
+      return { chipBonus: heartCount * 40 };
+    }
+  },
+  BLACK_CARD: {
+    id: 'black_card',
+    name: '黑卡',
+    description: '每张黑桃 +40 筹码',
+    rarity: '稀有',
+    cost: 7,
+    effect: (state) => {
+      const spadeCount = state.hand?.filter(c => c.suit === '♠').length || 0;
+      return { chipBonus: spadeCount * 40 };
+    }
+  },
+
+  // 史诗 (4张)
+  MISPRINT: {
+    id: 'misprint',
+    name: '错印',
+    description: '+0-30 随机倍率',
+    rarity: '史诗',
+    cost: 9,
+    effect: (state) => {
+      return { multBonus: Math.floor(Math.random() * 31) };
+    }
+  },
+  GAMBLER: {
+    id: 'gambler',
+    name: '赌徒',
+    description: '50%几率 ×3 倍率，50%几率 ×0 倍率',
+    rarity: '史诗',
+    cost: 9,
+    effect: (state) => {
+      return Math.random() < 0.5 ? { multBonus: 0, multMult: 3 } : { multBonus: 0, multMult: 0 };
+    }
+  },
+  VAULT: {
+    id: 'vault',
+    name: '金库',
+    description: '每有 $1 增加 +0.5 筹码',
+    rarity: '史诗',
+    cost: 10,
+    effect: (state) => {
+      return { chipBonus: Math.floor(state.money * 0.5) };
+    }
+  },
+  CONSTRUCTOR: {
+    id: 'constructor',
+    name: '建筑师',
+    description: '每回合第一张牌 +30 筹码，+8 倍率',
+    rarity: '史诗',
+    cost: 10,
+    effect: (state) => {
+      if (state.isFirstHand) {
+        return { chipBonus: 30, multBonus: 8 };
+      }
+      return {};
+    }
+  },
+
+  // 传说 (2张)
+  OOPS: {
+    id: 'oops',
+    name: '哎呀!',
+    description: '所有小丑牌 +6 倍率（这个除外）',
+    rarity: '传说',
+    cost: 20,
+    effect: (state) => ({})
+  },
+  PHANTOM: {
+    id: 'phantom',
+    name: '幻影',
+    description: '最终得分 ×1.5',
+    rarity: '传说',
+    cost: 22,
+    effect: (state) => ({ scoreMult: 1.5 })
   }
 };
 

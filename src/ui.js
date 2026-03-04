@@ -42,7 +42,7 @@ export class UI {
     game.jokers.forEach((joker, index) => {
       const rarityColor = chalk.hex(RARITY_COLORS[joker.rarity]);
       const num = chalk.gray(`[${index + 1}]`);
-      console.log(`${num} ${rarityColor(joker.name)} - ${joker.description}`);
+      console.log(`${num} ${rarityColor(`[${joker.rarity}]`)} ${rarityColor(joker.name)} - ${joker.description}`);
     });
     console.log();
   }
@@ -193,28 +193,39 @@ export class UI {
     }
   }
 
-  static async askShop(money, maxJokers) {
+  static async askShop(money, maxJokers, jokerCount) {
+    const choices = [
+      { name: '🛒 购买小丑牌', value: 'buy' },
+    ];
+    if (jokerCount > 0) {
+      choices.push({ name: '💰 出售小丑牌', value: 'sell' });
+    }
+    choices.push({ name: '➡️ 跳过，进入下一回合', value: 'skip' });
+
     const { action } = await inquirer.prompt([
       {
         type: 'list',
         name: 'action',
         message: '商店 - 你想做什么？',
-        choices: [
-          { name: '🛒 购买小丑牌', value: 'buy' },
-          { name: '➡️ 跳过，进入下一回合', value: 'skip' }
-        ]
+        choices
       }
     ]);
     return action;
   }
 
-  static async askJokerPurchase(jokers, money) {
+  static async askJokerPurchase(jokers, money, slotsFull = false) {
     const choices = jokers.map((joker, index) => {
       const canAfford = money >= joker.cost;
+      let disabled = false;
+      if (slotsFull) {
+        disabled = '槽位已满';
+      } else if (!canAfford) {
+        disabled = '金钱不足';
+      }
       return {
         name: `[${index + 1}] ${joker.name} - ${joker.description} ($${joker.cost})`,
         value: index,
-        disabled: !canAfford ? '金钱不足' : false
+        disabled
       };
     });
     choices.push({ name: '← 返回', value: -1 });
@@ -238,6 +249,40 @@ export class UI {
       console.log(`  [${index + 1}] ${rarityColor(joker.rarity)} - ${rarityColor(joker.name)}`);
       console.log(`      ${joker.description}`);
       console.log(`      ${chalk.green(`$${joker.cost}`)}\n`);
+    });
+  }
+
+  static async askJokerSell(jokers) {
+    const choices = jokers.map((joker, index) => {
+      const sellPrice = Math.max(1, Math.floor(joker.cost / 3));
+      const rarityColor = chalk.hex(RARITY_COLORS[joker.rarity]);
+      return {
+        name: `[${index + 1}] ${rarityColor(`[${joker.rarity}]`)} ${rarityColor(joker.name)} - ${joker.description} (${chalk.green(`+$${sellPrice}`)})`,
+        value: index
+      };
+    });
+    choices.push({ name: '← 返回', value: -1 });
+
+    const { index } = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'index',
+        message: '选择要出售的小丑牌:',
+        choices
+      }
+    ]);
+
+    return index;
+  }
+
+  static printYourJokersForSell(game) {
+    console.log(chalk.bold.yellow('\n💰 你的小丑牌 (可出售):\n'));
+    game.jokers.forEach((joker, index) => {
+      const rarityColor = chalk.hex(RARITY_COLORS[joker.rarity]);
+      const sellPrice = Math.max(1, Math.floor(joker.cost / 3));
+      console.log(`  [${index + 1}] ${rarityColor(`[${joker.rarity}]`)} - ${rarityColor(joker.name)}`);
+      console.log(`      ${joker.description}`);
+      console.log(`      售价: ${chalk.green(`$${sellPrice}`)} (原价: $${joker.cost})\n`);
     });
   }
 

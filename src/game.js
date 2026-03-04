@@ -51,16 +51,32 @@ export class GameState {
 
     let chipBonus = 0;
     let multBonus = 0;
+    let multMult = 1;
+    let scoreMult = 1;
+
+    // 先处理"哎呀!"的特殊效果（给其他小丑牌+6倍率）
+    const hasOops = this.jokers.some(j => j.id === 'oops');
+    const extraMultFromOops = hasOops ? (this.jokers.length - 1) * 6 : 0;
 
     for (const joker of this.jokers) {
       const effect = joker.applyEffect(state);
       chipBonus += effect.chipBonus || 0;
       multBonus += effect.multBonus || 0;
+      if (effect.multMult !== undefined) {
+        multMult = effect.multMult; // 赌徒效果覆盖式
+      }
+      if (effect.scoreMult !== undefined) {
+        scoreMult = effect.scoreMult; // 幻影效果覆盖式
+      }
     }
 
+    multBonus += extraMultFromOops;
+
     const totalChips = handResult.chips + chipBonus + selectedCards.reduce((sum, c) => sum + (c.bonusChips || 0), 0);
-    const totalMult = handResult.mult + multBonus + selectedCards.reduce((sum, c) => sum + (c.bonusMult || 0), 0);
-    const roundScore = totalChips * Math.max(1, totalMult);
+    let totalMult = handResult.mult + multBonus + selectedCards.reduce((sum, c) => sum + (c.bonusMult || 0), 0);
+    totalMult = Math.max(1, totalMult) * multMult;
+    let roundScore = totalChips * Math.max(1, totalMult);
+    roundScore = Math.floor(roundScore * scoreMult);
 
     this.score += roundScore;
     this.handsRemaining--;
@@ -130,5 +146,15 @@ export class GameState {
     this.money -= joker.cost;
     this.jokers.push(joker);
     return true;
+  }
+
+  sellJoker(index) {
+    if (index < 0 || index >= this.jokers.length) return null;
+
+    const joker = this.jokers[index];
+    const sellPrice = Math.max(1, Math.floor(joker.cost / 3));
+    this.money += sellPrice;
+    this.jokers.splice(index, 1);
+    return { joker, sellPrice };
   }
 }
