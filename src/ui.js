@@ -11,7 +11,7 @@ export class UI {
 
   static printHeader(game) {
     console.log(chalk.bold.cyan('\n╔════════════════════════════════════════╗'));
-    console.log(chalk.bold.cyan('║') + chalk.bold.yellow('           ♠  小丑牌 CLI  ♥              ') + chalk.bold.cyan('║'));
+    console.log(chalk.bold.cyan('║') + chalk.bold.yellow('           ♠  小丑牌 CLI  ♥             ') + chalk.bold.cyan('║'));
     console.log(chalk.bold.cyan('╚════════════════════════════════════════╝\n'));
 
     console.log(chalk.bold(`回合 ${game.round} | 盲注 ${game.ante}`));
@@ -252,7 +252,7 @@ export class UI {
 
   static printGameOver(game) {
     console.log(chalk.bold.red('\n╔════════════════════════════════════════╗'));
-    console.log(chalk.bold.red('║') + chalk.bold.yellow('             游戏结束!                     ') + chalk.bold.red('║'));
+    console.log(chalk.bold.red('║') + chalk.bold.yellow('             游戏结束!                  ') + chalk.bold.red('║'));
     console.log(chalk.bold.red('╚════════════════════════════════════════╝\n'));
     console.log(chalk.bold(`最终回合: ${game.round}`));
     console.log(chalk.bold(`最终盲注: ${game.ante}`));
@@ -273,8 +273,8 @@ export class UI {
 
   static printWelcome() {
     console.log(chalk.bold.cyan('\n╔════════════════════════════════════════╗'));
-    console.log(chalk.bold.cyan('║') + chalk.bold.yellow('           ♠  小丑牌 CLI  ♥              ') + chalk.bold.cyan('║'));
-    console.log(chalk.bold.cyan('║') + chalk.gray('        一款 Balatro 风格的卡牌游戏       ') + chalk.bold.cyan('║'));
+    console.log(chalk.bold.cyan('║') + chalk.bold.yellow('           ♠  小丑牌 CLI  ♥             ') + chalk.bold.cyan('║'));
+    console.log(chalk.bold.cyan('║') + chalk.gray('        一款 Balatro 风格的卡牌游戏     ') + chalk.bold.cyan('║'));
     console.log(chalk.bold.cyan('╚════════════════════════════════════════╝\n'));
     console.log(chalk.yellow('游戏玩法:'));
     console.log(chalk.gray('  • 出扑克牌来赚取分数'));
