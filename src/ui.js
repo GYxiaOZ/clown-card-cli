@@ -55,7 +55,7 @@ export class UI {
       return;
     }
 
-    const lines = [[], [], [], [], []];
+    const lines = [[], [], [], []];
 
     hand.cards.forEach((card, index) => {
       const isHighlighted = highlightIndices.includes(index);
@@ -82,8 +82,7 @@ export class UI {
       lines[0].push(borderColor(isHighlighted ? '╔════╗' : '┌────┐'));
       lines[1].push(`${borderColor(isHighlighted ? '║' : '│')}${color(rankDisplay)}${borderColor(isHighlighted ? '║' : '│')}`);
       lines[2].push(`${borderColor(isHighlighted ? '║' : '│')} ${color(card.suit)}  ${borderColor(isHighlighted ? '║' : '│')}`);
-      lines[3].push(`${borderColor(isHighlighted ? '║' : '│')}${chalk.gray(idxStr)}${borderColor(isHighlighted ? '║' : '│')}`);
-      lines[4].push(borderColor(isHighlighted ? '╚════╝' : '└────┘'));
+      lines[3].push(borderColor(isHighlighted ? '╚════╝' : '└────┘'));
     });
 
     lines.forEach(line => console.log(line.join(' ')));
