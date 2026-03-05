@@ -1,4 +1,26 @@
 // 小丑牌系统
+//
+// 小丑牌效果字段说明：
+//
+// chipBonus:  筹码加成 - 直接加到基础筹码上的数值
+//             例：{ chipBonus: 50 } → 总筹码 = 基础筹码 + 50
+//
+// multBonus:  倍率加成 - 直接加到基础倍率上的数值
+//             例：{ multBonus: 4 } → 总倍率 = 基础倍率 + 4
+//
+// multMult:   倍率乘法 - 对总倍率进行乘法（覆盖式，后生效的覆盖先生效的）
+//             例：{ multMult: 3 } → 总倍率 = (基础倍率 + multBonus) × 3
+//
+// scoreMult:  得分乘法 - 对最终得分进行乘法（覆盖式，后生效的覆盖先生效的）
+//             例：{ scoreMult: 1.5 } → 最终得分 = 筹码 × 倍率 × 1.5
+//
+// 计算顺序：
+// 1. 计算基础筹码和基础倍率（来自牌型）
+// 2. 累加所有小丑牌的 chipBonus 和 multBonus
+// 3. 如果有 multMult，应用倍率乘法
+// 4. 计算得分：(筹码 + chipBonus) × max(1, 倍率 + multBonus) × multMult
+// 5. 如果有 scoreMult，应用得分乘法
+
 
 export const JOKER_TYPES = {
   // 普通 (16张)
@@ -93,12 +115,12 @@ export const JOKER_TYPES = {
   BANNER: {
     id: 'banner',
     name: '旗帜',
-    description: '回合第一手牌 +15 倍率',
+    description: '回合第一手牌 +12 倍率',
     rarity: '普通',
     cost: 5,
     effect: (state) => {
       if (state.isFirstHand) {
-        return { multBonus: 15 };
+        return { multBonus: 12 };
       }
       return {};
     }
@@ -219,12 +241,12 @@ export const JOKER_TYPES = {
   HANGER_ON: {
     id: 'hanger_on',
     name: '跟屁虫',
-    description: '拥有至少 5 张小丑牌时 +10 倍率',
+    description: '拥有至少 5 张小丑牌时 +12 倍率',
     rarity: '稀有',
     cost: 7,
     effect: (state) => {
       if (state.jokerCount >= 5) {
-        return { multBonus: 10 };
+        return { multBonus: 12 };
       }
       return {};
     }
@@ -306,21 +328,24 @@ export const JOKER_TYPES = {
   GAMBLER: {
     id: 'gambler',
     name: '赌徒',
-    description: '50%几率 ×3 倍率，50%几率 ×0 倍率',
+    description: '70%几率 ×3 倍率，25%几率 ×2 倍率， 5%几率 ×0 倍率',
     rarity: '史诗',
     cost: 9,
     effect: (state) => {
-      return Math.random() < 0.5 ? { multBonus: 0, multMult: 3 } : { multBonus: 0, multMult: 0 };
+      const r = Math.random();
+      if (r < 0.7) return { multBonus: 0, multMult: 3 };
+      if (r < 0.95) return { multBonus: 0, multMult: 2 };
+      return { multBonus: 0, multMult: 0 };
     }
   },
   VAULT: {
     id: 'vault',
     name: '金库',
-    description: '每有 $1 增加 +0.5 筹码',
+    description: '每有 $5 增加 +1 倍率',
     rarity: '史诗',
     cost: 10,
     effect: (state) => {
-      return { chipBonus: Math.floor(state.money * 0.5) };
+      return { multBonus: Math.floor(state.money / 5) };
     }
   },
   CONSTRUCTOR: {
