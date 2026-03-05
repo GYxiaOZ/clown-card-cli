@@ -2,14 +2,29 @@
   "name": "clown-card-cli",
   "version": "1.0.0",
   "description": "A command-line Balatro-like card game",
+  "homepage": "https://github.com/GYxiaOZ/clown-card-cli",
   "main": "src/index.js",
   "type": "module",
+  "bin": {
+    "clown-card": "src/index.js"
+  },
+  "files": [
+    "src/"
+  ],
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js"
   },
-  "keywords": ["game", "cards", "cli", "balatro"],
-  "author": "",
+  "keywords": [
+    "game",
+    "cards",
+    "cli",
+    "balatro",
+    "roguelike",
+    "poker",
+    "joker"
+  ],
+  "author": "gyxiaoz",
   "license": "MIT",
   "dependencies": {
     "chalk": "^5.3.0",
