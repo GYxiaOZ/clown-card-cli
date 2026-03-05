@@ -15,7 +15,7 @@ export class GameState {
 
     this.deck = new Deck();
     this.hand = new Hand();
-    this.jokers = [new Joker('JOKER')];
+    this.jokers = [];
     this.maxJokers = 5;
 
     this.isFirstHand = true;
@@ -72,7 +72,10 @@ export class GameState {
 
     multBonus += extraMultFromOops;
 
-    const totalChips = handResult.chips + chipBonus + selectedCards.reduce((sum, c) => sum + (c.bonusChips || 0), 0);
+    // 计算构成牌型的牌的筹码总和
+    const cardChips = handResult.cards.reduce((sum, c) => sum + c.getChipValue(), 0);
+
+    const totalChips = cardChips + handResult.chips + chipBonus + selectedCards.reduce((sum, c) => sum + (c.bonusChips || 0), 0);
     let totalMult = handResult.mult + multBonus + selectedCards.reduce((sum, c) => sum + (c.bonusMult || 0), 0);
     totalMult = Math.max(1, totalMult) * multMult;
     let roundScore = totalChips * Math.max(1, totalMult);
@@ -92,7 +95,8 @@ export class GameState {
       handResult,
       chips: totalChips,
       mult: totalMult,
-      score: roundScore
+      score: roundScore,
+      cardChips: cardChips
     };
   }
 

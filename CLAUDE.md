@@ -33,7 +33,7 @@ src/
 
 1. **入口** (`index.js`) → 加载存档 → 创建 GameState
 2. **游戏循环** (`GameState`) → 管理回合、分数、出牌/弃牌
-3. **牌型判断** (`HandEvaluator`) → 评估手牌并计算分数
+3. **牌型判断** (`HandEvaluator`) → 评估手牌并返回构成牌型的牌
 4. **小丑牌效果** (`JOKER_TYPES`) → 应用各种加成
 5. **UI 渲染** (`UI`) → 显示游戏状态和处理交互
 
@@ -42,13 +42,24 @@ src/
 | 类 | 文件 | 职责 |
 |----|------|------|
 | `GameState` | game.js | 回合管理、分数计算、商店购买/出售、进度控制 |
-| `Card` | cards.js | 单张牌（花色、点数、强化状态） |
+| `Card` | cards.js | 单张牌（花色、点数、强化状态、牌面筹码计算） |
 | `Deck` | cards.js | 牌堆管理（洗牌、发牌、弃牌堆） |
 | `Hand` | cards.js | 手牌管理（添加、删除、排序） |
 | `HandEvaluator` | handEvaluator.js | 11 种牌型判断（高牌到五同） |
 | `Joker` | jokers.js | 小丑牌（稀有度、效果、描述） |
 | `UI` | ui.js | chalk/inquirer 界面渲染 |
 | `SaveManager` | save.js | save.json 读写 |
+
+## 计分规则
+
+最终得分 =（**牌面筹码** + 牌型基础筹码 + 小丑牌 chipBonus）× 总倍率
+
+**牌面筹码**：
+- 2–10：牌面数字
+- J/Q/K/A：都是 10
+- 只计算 `handResult.cards` 中构成牌型的牌，不是所有打出的牌
+
+**总倍率**：max(1, 牌型基础倍率 + 小丑牌 multBonus) × 小丑牌 multMult（如果有）
 
 ## 牌型系统
 
@@ -67,6 +78,7 @@ src/
   - `scoreMult`: 最终得分乘法（覆盖式，如幻影）
 - 特殊效果："哎呀!" 给其他所有小丑牌额外 +6 倍率
 - 添加新小丑牌：在 `jokers.js` 的 `JOKER_TYPES` 中新增配置
+- 开局没有初始小丑牌
 
 ## 商店系统
 

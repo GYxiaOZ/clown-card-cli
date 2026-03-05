@@ -34,6 +34,13 @@ export class Card {
   isAce() {
     return this.rank === 'A';
   }
+
+  getChipValue() {
+    if (this.isFaceCard() || this.isAce()) {
+      return 10;
+    }
+    return parseInt(this.rank, 10);
+  }
 }
 
 export class Deck {

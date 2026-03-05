@@ -95,7 +95,10 @@ export class UI {
     const handType = HAND_TYPES[result.handResult.type];
     console.log(chalk.bold.green('\n✓ 出牌成功!'));
     console.log(chalk.cyan(`  牌型: ${handType.name}`));
-    console.log(chalk.yellow(`  筹码: ${result.chips}`));
+    if (result.cardChips !== undefined) {
+      console.log(chalk.gray(`  牌面筹码: ${result.cardChips}`));
+    }
+    console.log(chalk.yellow(`  总筹码: ${result.chips}`));
     console.log(chalk.magenta(`  倍率: x${result.mult}`));
     console.log(chalk.green.bold(`  得分: +${result.score.toLocaleString()}\n`));
   }
