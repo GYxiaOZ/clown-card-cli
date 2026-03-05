@@ -2,6 +2,9 @@
 
 一个命令行版的 Balatro 风格扑克牌 Roguelike 游戏！
 
+[![npm version](https://img.shields.io/npm/v/clown-card-cli.svg)](https://www.npmjs.com/package/clown-card-cli)
+[![npm license](https://img.shields.io/npm/l/clown-card-cli.svg)](https://www.npmjs.com/package/clown-card-cli)
+
 ## 功能特性
 
 - 🎴 完整的扑克牌系统
@@ -11,15 +14,27 @@
 - 📈 难度递进系统（盲注）
 - 💾 存档系统
 
-## 安装
+## 快速开始
+
+### 全局安装（推荐）
 
 ```bash
-npm install
+npm install -g clown-card-cli
+clown-card
 ```
 
-## 运行
+### 使用 npx 直接运行
 
 ```bash
+npx clown-card-cli
+```
+
+### 本地开发
+
+```bash
+git clone https://github.com/gyxiaoz/clown-card-cli.git
+cd clown-card-cli
+npm install
 npm start
 ```
 

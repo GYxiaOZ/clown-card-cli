@@ -1,6 +1,6 @@
 {
   "name": "clown-card-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A command-line Balatro-like card game",
   "homepage": "https://github.com/GYxiaOZ/clown-card-cli",
   "main": "src/index.js",
